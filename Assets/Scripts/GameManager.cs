@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        // Previene duplicados
         if (I != null && I != this)
         {
             Destroy(gameObject);
@@ -61,7 +60,6 @@ public class GameManager : MonoBehaviour
         IsGameOver = true;
         OnGameOver?.Invoke();
 
-        // Cambia a escena GameOver con seguridad
         if (Application.isPlaying)
         {
             StartCoroutine(LoadGameOverScene());
@@ -72,7 +70,6 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        // Verifica antes de cargar
         if (I != null)
         {
             SceneManager.LoadScene("Derrota");

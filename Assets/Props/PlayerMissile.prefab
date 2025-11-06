@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af3e504de1ea654781f1113a5dedbec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 7
   direction: {x: 0, y: 0, z: 0}
   explodeRadius: 2
   damageMask:

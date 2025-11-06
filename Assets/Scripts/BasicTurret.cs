@@ -5,6 +5,14 @@ using System.Linq;
 
 public class BasicTurret : Turret
 {
+    [SerializeField] private int maxMissiles = 10;
+    private int currentMissiles;
+
+    private void Start()
+    {
+        currentMissiles = maxMissiles;
+    }
+
     protected override void Fire(Vector3 targetPos)
     {
         if (missilePrefab == null || firePoint == null)
@@ -13,14 +21,19 @@ public class BasicTurret : Turret
             return;
         }
 
-        Vector3 dir = (targetPos - firePoint.position).normalized;
+        if (currentMissiles <= 0)
+        {
+            Debug.Log("Sin misiles disponibles en " + gameObject.name);
+            return;
+        }
 
+        Vector3 dir = (targetPos - firePoint.position).normalized;
         var go = ObjectPool.I.Spawn(missilePrefab, firePoint.position, Quaternion.LookRotation(dir));
 
         if (go.TryGetComponent<PlayerMissile>(out var missile))
-        {
             missile.Initialize(dir);
-        }
+
+        currentMissiles--;
     }
 
     private void OnEnable()
@@ -41,4 +54,10 @@ public class BasicTurret : Turret
     {
         Fire(pos);
     }
+
+    public void Reload(int amount)
+    {
+        currentMissiles = Mathf.Min(currentMissiles + amount, maxMissiles);
+    }
+    public int GetRemainingMissiles() => currentMissiles;
 }

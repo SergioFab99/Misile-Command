@@ -16,6 +16,16 @@ public class PlayerMissile : MonoBehaviour
         col.isTrigger = true;
     }
 
+    private void OnEnable()
+    {
+        Invoke(nameof(DespawnSelf), 3f);
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
+    }
+
     public void Initialize(Vector3 dir)
     {
         direction = new Vector3(dir.x, 0, dir.z).normalized;
@@ -64,5 +74,11 @@ public class PlayerMissile : MonoBehaviour
         }
 
         ObjectPool.I.Despawn(gameObject);
+    }
+
+    private void DespawnSelf()
+    {
+        if (gameObject.activeSelf)
+            ObjectPool.I.Despawn(gameObject);
     }
 }

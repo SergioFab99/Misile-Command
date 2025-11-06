@@ -13,6 +13,16 @@ public class EnemyMissile : MonoBehaviour
         col.isTrigger = true;
     }
 
+    private void OnEnable()
+    {
+        Invoke(nameof(DespawnSelf), 6f);
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
+    }
+
     public void Initialize(Vector3 dir, City targetCity)
     {
         target = targetCity != null ? targetCity.transform.position : transform.position + dir * 100f;
@@ -56,5 +66,11 @@ public class EnemyMissile : MonoBehaviour
         if (!alive) return;
         alive = false;
         ObjectPool.I.Despawn(gameObject);
+    }
+
+    private void DespawnSelf()
+    {
+        if (gameObject.activeSelf)
+            ObjectPool.I.Despawn(gameObject);
     }
 }
