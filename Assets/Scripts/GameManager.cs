@@ -19,13 +19,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (I != null && I != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
         I = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public List<City> GetActiveCities()

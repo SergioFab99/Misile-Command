@@ -11,9 +11,7 @@ public class EventBus : MonoBehaviour
 
     private void Awake()
     {
-        if (I != null) { Destroy(gameObject); return; }
         I = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public void PlayerClicked(Vector3 pos) => OnPlayerClick?.Invoke(pos);
